@@ -1,0 +1,12 @@
+{
+  "name": "toria-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing-tienda de TORIA Studio: velas, difusores y aromatizantes artesanales.",
+  "scripts": {
+    "dev": "python3 -m http.server 8000 --directory public"
+  },
+  "dependencies": {
+    "mercadopago": "^2.9.0"
+  }
+}

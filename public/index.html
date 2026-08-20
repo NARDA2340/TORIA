@@ -3,886 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TORIA Studio — Velas artesanales de cera vegetal | Hechas a mano</title>
-  <meta name="description" content="Velas, difusores y aromatizantes artesanales de TORIA Studio. Cera 100% vegetal, hechas a mano en tandas chicas. Envíos a todo el país. Pedí por WhatsApp.">
+  <title>TORIA Studio — Velas y aromatizantes artesanales de cera vegetal</title>
+  <meta name="description" content="Velas, difusores y aromatizantes artesanales de TORIA Studio. Cera 100% vegetal, hechas a mano en tandas chicas por dos hermanas. Envíos a todo el país.">
 
-  <!-- Open Graph para que se vea lindo al compartir el link -->
   <meta property="og:title" content="TORIA Studio — Velas artesanales de cera vegetal">
   <meta property="og:description" content="Hechas a mano en tandas chicas. Cera 100% vegetal, aromas propios y packaging reutilizable.">
   <meta property="og:type" content="website">
+  <!-- PENDIENTE: og:image. Subir una foto a media/og.jpg (1200x630px) y descomentar:
+  <meta property="og:image" content="https://toriastudio.netlify.app/media/og.jpg"> -->
 
-  <!-- Una sola familia de Google Fonts, con display=swap para no bloquear el render -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
-  <style>
-/* =========================================================
-   TORIA Studio — Landing de producto
-   CSS puro, mobile-first. Breakpoints: 768px y 1100px.
-   Nomenclatura tipo BEM (.bloque__elemento--modificador).
-   ========================================================= */
-
-/* ---------- Tokens de marca ---------- */
-:root {
-  /* Paleta cálida crema / terracota */
-  --cream:        #f6f0e7;  /* fondo de página */
-  --cream-soft:   #fbf7f0;  /* fondo de cards y secciones claras */
-  --sand:         #ece2d3;  /* bordes suaves / separadores */
-  --ink:          #2f2620;  /* texto principal (marrón espresso) */
-  --ink-soft:     #5b4f45;  /* texto secundario */
-  --terracotta:   #9a4d34;  /* CTA principal (contraste AA con blanco) */
-  --terracotta-d: #833f29;  /* hover del CTA */
-  --olive:        #6c6b52;  /* acento sage/eucalipto */
-
-  /* Tipografía */
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-
-  /* Layout */
-  --maxw: 1180px;
-  --radius: 14px;
-  --shadow: 0 10px 30px rgba(47, 38, 32, 0.08);
-}
-
-/* ---------- Reset acotado ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--ink);
-  background: var(--cream);
-  -webkit-font-smoothing: antialiased;
-}
-img { max-width: 100%; display: block; }
-a { color: inherit; }
-h1, h2, h3, h4 { margin: 0; font-weight: 500; line-height: 1.15; }
-p { margin: 0; }
-ul { margin: 0; padding: 0; list-style: none; }
-
-/* Utilidad de foco accesible */
-a:focus-visible, summary:focus-visible, .btn:focus-visible {
-  outline: 3px solid var(--olive);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* ---------- Botones ---------- */
-.btn {
-  display: inline-block;
-  padding: 14px 26px;
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  text-align: center;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color .2s ease, transform .1s ease, color .2s ease;
-}
-.btn:active { transform: translateY(1px); }
-
-.btn--primary {
-  background: var(--terracotta);
-  color: #fff;
-}
-.btn--primary:hover { background: var(--terracotta-d); }
-
-.btn--ghost {
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-}
-.btn--ghost:hover { background: var(--ink); color: var(--cream); }
-
-.btn--card {
-  padding: 11px 20px;
-  font-size: 0.95rem;
-  background: transparent;
-  color: var(--terracotta);
-  border: 1.5px solid var(--terracotta);
-  width: 100%;
-}
-.btn--card:hover { background: var(--terracotta); color: #fff; }
-
-/* Botón Instagram — outline elegante, funciona sobre fondo claro */
-.btn--ig {
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-}
-.btn--ig:hover { background: var(--ink); color: var(--cream); }
-
-.btn--lg { padding: 17px 38px; font-size: 1.1rem; }
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(246, 240, 231, 0.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--sand);
-}
-.site-header__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.site-header__brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  line-height: 1;
-}
-.site-header__brand-name {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  letter-spacing: 0.22em;
-  padding-left: 0.22em;
-}
-.site-header__brand-sub {
-  font-size: 0.6rem;
-  letter-spacing: 0.42em;
-  padding-left: 0.42em;
-  color: var(--ink-soft);
-}
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.site-nav__link {
-  text-decoration: none;
-  font-size: 0.95rem;
-  color: var(--ink);
-}
-.site-nav__link:not(.site-nav__link--cta) { display: none; } /* en mobile solo el CTA */
-.site-nav__link--cta {
-  background: var(--terracotta);
-  color: #fff;
-  padding: 9px 18px;
-  border-radius: 999px;
-  font-weight: 600;
-}
-.site-nav__link--cta:hover { background: var(--terracotta-d); }
-
-/* =========================================================
-   HERO
-   ========================================================= */
-.hero { background: var(--cream); }
-.hero__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 40px 20px 56px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-.hero__eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--olive);
-  margin-bottom: 14px;
-}
-.hero__title {
-  font-family: var(--font-serif);
-  font-size: 2.6rem;
-  font-weight: 500;
-  margin-bottom: 18px;
-}
-.hero__text {
-  font-size: 1.1rem;
-  color: var(--ink-soft);
-  max-width: 46ch;
-  margin-bottom: 26px;
-}
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.hero__actions .btn { flex: 1 1 auto; }
-.hero__note {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-}
-
-/* PLACEHOLDER visual del hero (reemplazar el div por una <img>) */
-.hero__media {
-  position: relative;
-  min-height: 320px;
-  border-radius: var(--radius);
-  background:
-    radial-gradient(120% 90% at 70% 20%, rgba(233, 214, 188, 0.9) 0%, transparent 60%),
-    linear-gradient(160deg, #cbb69a 0%, #a98a6b 55%, #7d5f45 100%);
-  box-shadow: var(--shadow);
-}
-.hero__media-badge {
-  position: absolute;
-  left: 16px;
-  bottom: 16px;
-  background: rgba(251, 247, 240, 0.94);
-  color: var(--ink);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 8px 14px;
-  border-radius: 999px;
-}
-
-/* =========================================================
-   BENEFICIOS
-   ========================================================= */
-.benefits {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 56px 20px;
-}
-.benefits__title {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 36px;
-}
-.benefits__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-.benefit {
-  background: var(--cream-soft);
-  border: 1px solid var(--sand);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-}
-.benefit__icon {
-  display: inline-block;
-  font-size: 1.2rem;
-  color: var(--terracotta);
-  margin-bottom: 10px;
-}
-.benefit__title {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  margin-bottom: 8px;
-}
-.benefit__text {
-  color: var(--ink-soft);
-  font-size: 0.98rem;
-}
-
-/* =========================================================
-   CATÁLOGO
-   ========================================================= */
-.catalog {
-  background: var(--cream-soft);
-  border-top: 1px solid var(--sand);
-  border-bottom: 1px solid var(--sand);
-}
-.catalog__head {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 56px 20px 12px;
-  text-align: center;
-}
-.catalog__title {
-  font-family: var(--font-serif);
-  font-size: 2.2rem;
-  margin-bottom: 8px;
-}
-.catalog__subtitle { color: var(--ink-soft); }
-.catalog__group-title {
-  max-width: var(--maxw);
-  margin: 34px auto 18px;
-  padding: 0 20px;
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--ink);
-  border-left: 3px solid var(--terracotta);
-}
-.catalog__grid {
-  max-width: var(--maxw);
-  margin: 0 auto 24px;
-  padding: 0 20px 24px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 22px;
-}
-
-/* Card de producto */
-.product-card {
-  background: var(--cream);
-  border: 1px solid var(--sand);
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-.product-card__media {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  /* PLACEHOLDER: reemplazar por <img loading="lazy"> foto ~800x800px WebP */
-  background: linear-gradient(160deg, #cbb69a, #8a6c4e);
-}
-/* Variantes de color por producto (guía visual hasta poner las fotos reales) */
-.product-card__media--warm     { background: linear-gradient(160deg, #d8b98f, #9c6b3f); }
-.product-card__media--wood     { background: linear-gradient(160deg, #b98f6a, #6f4a2f); }
-.product-card__media--citrus   { background: linear-gradient(160deg, #e6d9a6, #b79b4e); }
-.product-card__media--cherry   { background: linear-gradient(160deg, #c98f86, #8a3f3a); }
-.product-card__media--spice    { background: linear-gradient(160deg, #dca86a, #a85f2c); }
-.product-card__media--coast    { background: linear-gradient(160deg, #aac2c0, #5f8683); }
-.product-card__media--fresh    { background: linear-gradient(160deg, #c3cbb4, #7c8a67); }
-.product-card__media--exotic   { background: linear-gradient(160deg, #d3c0a2, #987f57); }
-.product-card__media--tropical { background: linear-gradient(160deg, #e2c088, #c07d3f); }
-
-.product-card__tag {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--terracotta);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 5px 12px;
-  border-radius: 999px;
-}
-.product-card__tag--muted {
-  background: rgba(251, 247, 240, 0.94);
-  color: var(--ink);
-}
-.product-card__body {
-  padding: 20px 20px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-.product-card__name {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-}
-.product-card__scent {
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-  font-style: italic;
-}
-.product-card__price {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 4px 0 14px;
-}
-.product-card__body .btn--card { margin-top: auto; }
-
-/* =========================================================
-   PRUEBA SOCIAL
-   ========================================================= */
-.social {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 56px 20px;
-}
-.social__title {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 28px;
-}
-.social__stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 28px;
-  margin-bottom: 40px;
-}
-.social__stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.social__num {
-  font-family: var(--font-serif);
-  font-size: 2.4rem;
-  color: var(--terracotta);
-  line-height: 1;
-}
-.social__label {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 6px;
-}
-.social__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-.testimonial {
-  background: var(--cream-soft);
-  border: 1px solid var(--sand);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-}
-.testimonial__quote {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-style: italic;
-  margin-bottom: 14px;
-}
-.testimonial__author {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-
-/* =========================================================
-   FAQ
-   ========================================================= */
-.faq {
-  background: var(--cream-soft);
-  border-top: 1px solid var(--sand);
-}
-.faq__title {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  text-align: center;
-  padding: 56px 20px 24px;
-}
-.faq__list {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 20px 56px;
-}
-.faq__item {
-  border-bottom: 1px solid var(--sand);
-}
-.faq__question {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  padding: 20px 40px 20px 0;
-  cursor: pointer;
-  position: relative;
-  list-style: none;
-}
-.faq__question::-webkit-details-marker { display: none; }
-.faq__question::after {
-  content: "+";
-  position: absolute;
-  right: 6px;
-  top: 18px;
-  font-size: 1.6rem;
-  color: var(--terracotta);
-  transition: transform .2s ease;
-}
-.faq__item[open] .faq__question::after {
-  content: "–";
-}
-.faq__answer {
-  padding: 0 0 20px;
-  color: var(--ink-soft);
-}
-
-/* =========================================================
-   CTA FINAL
-   ========================================================= */
-.final-cta {
-  background: var(--ink);
-  color: var(--cream);
-}
-.final-cta__inner {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 64px 20px;
-  text-align: center;
-}
-.final-cta__title {
-  font-family: var(--font-serif);
-  font-size: 2.2rem;
-  margin-bottom: 14px;
-}
-.final-cta__text {
-  color: #d9cdbf;
-  margin-bottom: 28px;
-  font-size: 1.05rem;
-}
-.final-cta__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-}
-/* En el CTA final el fondo es oscuro: el botón de Instagram va en outline claro */
-.final-cta .btn--ig {
-  color: var(--cream);
-  border-color: var(--cream);
-}
-.final-cta .btn--ig:hover { background: var(--cream); color: var(--ink); }
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.site-footer {
-  background: var(--cream);
-  border-top: 1px solid var(--sand);
-}
-.site-footer__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 40px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.site-footer__name {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  letter-spacing: 0.16em;
-}
-.site-footer__tagline {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-top: 4px;
-}
-.site-footer__links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.95rem;
-}
-.site-footer__links a { color: var(--terracotta); text-decoration: none; }
-.site-footer__links a:hover { text-decoration: underline; }
-.site-footer__copy {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 20px 30px;
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-}
-
-/* =========================================================
-   BREAKPOINT — Tablet (≥ 768px)
-   ========================================================= */
-@media (min-width: 768px) {
-  body { font-size: 18px; }
-
-  .site-nav__link:not(.site-nav__link--cta) { display: inline; }
-
-  .hero__inner {
-    flex-direction: row;
-    align-items: center;
-    padding: 64px 20px 72px;
-  }
-  .hero__content { flex: 1 1 52%; }
-  .hero__media { flex: 1 1 48%; min-height: 440px; }
-  .hero__title { font-size: 3.1rem; }
-  .hero__actions .btn { flex: 0 0 auto; }
-
-  .benefits__grid { grid-template-columns: repeat(2, 1fr); }
-
-  .catalog__grid { grid-template-columns: repeat(2, 1fr); }
-
-  .social__grid { grid-template-columns: repeat(3, 1fr); }
-
-  .site-footer__inner {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .site-footer__links { text-align: right; }
-}
-
-/* =========================================================
-   BREAKPOINT — Desktop (≥ 1100px)
-   ========================================================= */
-@media (min-width: 1100px) {
-  .hero__inner { padding: 84px 20px 96px; gap: 56px; }
-  .hero__title { font-size: 3.6rem; }
-
-  .benefits__grid { grid-template-columns: repeat(4, 1fr); }
-
-  .catalog__grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* =========================================================
-   Accesibilidad — respeta reduce motion
-   ========================================================= */
-@media (prefers-reduced-motion: reduce) {
-  * { scroll-behavior: auto !important; transition: none !important; }
-}
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ============ HEADER ============ -->
-  <header class="site-header">
-    <div class="site-header__inner">
-      <a class="site-header__brand" href="#inicio" aria-label="TORIA Studio, inicio">
-        <span class="site-header__brand-name">TORIA</span>
-        <span class="site-header__brand-sub">STUDIO</span>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HEADER — sticky, logo centrado
+       Grilla de 3 columnas: navegación / logo / acciones
+       ═══════════════════════════════════════════════════════ -->
+  <header class="header">
+    <div class="header__inner">
+
+      <!-- Izquierda: hamburguesa (mobile) + nav (desktop) -->
+      <div class="header__left">
+        <button class="header__burger" type="button"
+                aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-mobile"
+                data-accion="abrir-menu">
+          <span class="header__burger-linea"></span>
+          <span class="header__burger-linea"></span>
+          <span class="header__burger-linea"></span>
+        </button>
+
+        <nav class="nav" aria-label="Líneas de producto">
+          <ul class="nav__lista">
+            <li><a class="nav__link" href="#velas" data-tab-link="velas">Velas</a></li>
+            <li><a class="nav__link" href="#aromatizantes" data-tab-link="aromatizantes">Aromatizantes</a></li>
+            <li><a class="nav__link" href="#aromatizantes" data-tab-link="aromatizantes">Difusores</a></li>
+            <li><a class="nav__link" href="#nosotras">Nosotras</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Centro: logo -->
+      <a class="header__brand" href="#inicio" aria-label="TORIA Studio, ir al inicio">
+        <span class="header__brand-nombre">TORIA</span>
+        <span class="header__brand-sub">STUDIO</span>
       </a>
-      <nav class="site-nav" aria-label="Navegación principal">
-        <a class="site-nav__link" href="#catalogo">Catálogo</a>
-        <a class="site-nav__link" href="#faq">Preguntas</a>
-        <a class="site-nav__link site-nav__link--cta" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20hacer%20un%20pedido%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir</a>
-      </nav>
+
+      <!-- Derecha: buscar + carrito -->
+      <div class="header__acciones">
+        <button class="icono-btn" type="button"
+                aria-label="Buscar productos" aria-expanded="false" aria-controls="buscador"
+                data-accion="alternar-buscador">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+          </svg>
+        </button>
+
+        <button class="icono-btn icono-btn--carrito" type="button"
+                aria-label="Abrir carrito" aria-controls="carrito"
+                data-accion="abrir-carrito">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7Z"></path>
+            <path d="M9 7V5.5a3 3 0 0 1 6 0V7"></path>
+          </svg>
+          <!-- El contador lo actualiza js/carrito.js -->
+          <span class="icono-btn__contador" data-carrito-contador hidden>0</span>
+        </button>
+      </div>
     </div>
+
+    <!-- Buscador desplegable -->
+    <div class="buscador" id="buscador" hidden>
+      <div class="buscador__inner">
+        <label class="buscador__label" for="buscador-input">Buscar en el catálogo</label>
+        <input class="buscador__input" id="buscador-input" type="search"
+               placeholder="Probá con «cítrica», «difusor», «vainilla»…"
+               autocomplete="off" data-buscador-input>
+        <button class="buscador__cerrar" type="button" data-accion="alternar-buscador" aria-label="Cerrar buscador">✕</button>
+      </div>
+      <p class="buscador__estado" data-buscador-estado role="status" aria-live="polite"></p>
+    </div>
+
+    <!-- Menú mobile -->
+    <nav class="menu-mobile" id="menu-mobile" aria-label="Menú principal" hidden>
+      <ul class="menu-mobile__lista">
+        <li><a class="menu-mobile__link" href="#velas" data-tab-link="velas">Velas</a></li>
+        <li><a class="menu-mobile__link" href="#aromatizantes" data-tab-link="aromatizantes">Aromatizantes</a></li>
+        <li><a class="menu-mobile__link" href="#aromatizantes" data-tab-link="aromatizantes">Difusores</a></li>
+        <li><a class="menu-mobile__link" href="#nosotras">Nosotras</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main id="inicio">
+  <main id="contenido">
 
-    <!-- ============ HERO ============ -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__inner">
-        <div class="hero__content">
+    <!-- ═══════════════════════════════════════════════════════
+         HERO — dividido 50/50: bloque de color + foto
+         ═══════════════════════════════════════════════════════ -->
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+
+      <div class="hero__bloque">
+        <div class="hero__contenido">
           <p class="hero__eyebrow">Velas · Difusores · Aromatizantes</p>
-          <h1 class="hero__title" id="hero-title">Tu casa, con el aroma que la vuelve tuya</h1>
-          <p class="hero__text">
-            Velas de cera 100% vegetal, hechas a mano en tandas chicas.
-            Aromas propios que cambian el clima de un ambiente en segundos —
-            y quedan lindas incluso apagadas.
+          <h1 class="hero__titulo" id="hero-titulo">Tu casa, con el aroma que la vuelve tuya</h1>
+          <p class="hero__texto">
+            Cera 100% vegetal, hecha a mano en tandas chicas.
+            Aromas propios que cambian el clima de un ambiente en segundos.
           </p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20hacer%20un%20pedido%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">
-              Pedir por WhatsApp
-            </a>
-            <a class="btn btn--ig" href="https://instagram.com/_toria.studio" target="_blank" rel="noopener">Ver en Instagram</a>
+          <div class="hero__categorias">
+            <a class="btn btn--borde-claro btn--cuadrado" href="#velas" data-tab-link="velas">Velas</a>
+            <a class="btn btn--borde-claro btn--cuadrado" href="#aromatizantes" data-tab-link="aromatizantes">Aromatizantes</a>
           </div>
-          <p class="hero__note">Hecho a mano en Argentina · Envíos a todo el país</p>
+          <p class="hero__nota">Hecho a mano en Argentina · Envíos a todo el país</p>
         </div>
+      </div>
 
-        <!-- PLACEHOLDER: foto hero. Reemplazar por foto real de vela ámbar sobre fondo crema
-             con eucalipto (la estética del Instagram). Recomendado: 1200x1400px, formato WebP,
-             peso < 200KB. Alt descriptivo abajo. -->
-        <div class="hero__media" role="img" aria-label="Vela artesanal TORIA de vidrio ámbar sobre una mesa de madera con eucalipto">
-          <span class="hero__media-badge">Cera 100% vegetal</span>
-        </div>
+      <!-- PLACEHOLDER media/hero.jpg — foto vertical de vela ámbar sobre fondo crema.
+           Medida recomendada: 1200x1400px, WebP o JPG, menos de 250KB.
+           Mientras no exista el archivo, js/ui.js deja visible el degradado de respaldo. -->
+      <div class="hero__media hero__media--placeholder">
+        <img class="hero__img" src="media/hero.jpg" alt="Vela artesanal TORIA de vidrio ámbar sobre una mesa de madera con eucalipto"
+             loading="eager" decoding="async" data-img-opcional>
+        <span class="hero__badge">Cera 100% vegetal</span>
       </div>
     </section>
 
-    <!-- ============ BENEFICIOS ============ -->
-    <section class="benefits" aria-labelledby="benefits-title">
-      <h2 class="benefits__title" id="benefits-title">Por qué te la vas a querer quedar</h2>
-      <ul class="benefits__grid">
-        <li class="benefit">
-          <span class="benefit__icon" aria-hidden="true">✦</span>
-          <h3 class="benefit__title">Cambian el ambiente</h3>
-          <p class="benefit__text">Encendés y en minutos el espacio se siente otro: más cálido, más tuyo, más para quedarse.</p>
-        </li>
-        <li class="benefit">
-          <span class="benefit__icon" aria-hidden="true">✦</span>
-          <h3 class="benefit__title">Regalo que queda impecable</h3>
-          <p class="benefit__text">Llegan listas para regalar, con packaging cuidado. Cero vuelta: elegís el aroma y quedás bien.</p>
-        </li>
-        <li class="benefit">
-          <span class="benefit__icon" aria-hidden="true">✦</span>
-          <h3 class="benefit__title">Duran y no se tiran</h3>
-          <p class="benefit__text">Cera vegetal de combustión pareja y frascos reutilizables: cuando se termina, el vidrio se queda con vos.</p>
-        </li>
-        <li class="benefit">
-          <span class="benefit__icon" aria-hidden="true">✦</span>
-          <h3 class="benefit__title">Hechas por nosotras</h3>
-          <p class="benefit__text">Tandas chicas, a mano, con aromas propios. No es producción en serie: es una pieza pensada.</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ============ CATÁLOGO ============ -->
-    <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
-      <div class="catalog__head">
-        <h2 class="catalog__title" id="catalog-title">Nuestra colección</h2>
-        <p class="catalog__subtitle">Cada aroma, un estado de ánimo distinto. Elegí el tuyo.</p>
+    <!-- ═══════════════════════════════════════════════════════
+         NOSOTRAS — bloque editorial imagen / texto
+         ═══════════════════════════════════════════════════════ -->
+    <section class="editorial" id="nosotras" aria-labelledby="nosotras-titulo">
+      <div class="editorial__media editorial__media--placeholder">
+        <!-- PLACEHOLDER media/nosotras.jpg — foto de las dos trabajando.
+             Medida recomendada: 1000x1200px, WebP o JPG, menos de 250KB. -->
+        <img class="editorial__img" src="media/nosotras.jpg" alt="Las dos hermanas de TORIA Studio preparando velas a mano en el taller"
+             loading="lazy" decoding="async" data-img-opcional>
       </div>
 
-      <h3 class="catalog__group-title">Velas — $35.000</h3>
-      <ul class="catalog__grid">
-
-        <!-- Aroma CONFIRMADO desde el Instagram -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--warm" role="img" aria-label="Vela Domingo a la tarde en frasco ámbar">
-            <!-- PLACEHOLDER foto producto ~800x800px WebP -->
-            <span class="product-card__tag">Más vendida</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Domingo a la tarde</h4>
-            <p class="product-card__scent">manzana · especias · vainilla</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Domingo%20a%20la%20tarde%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-
-        <!-- Aroma CONFIRMADO desde el Instagram -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--wood" role="img" aria-label="Vela Atelier en frasco ámbar">
-            <span class="product-card__tag product-card__tag--muted">Amaderada</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Atelier</h4>
-            <p class="product-card__scent">madera · ámbar · cuero</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Atelier%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-
-        <!-- Aroma CONFIRMADO desde el Instagram -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--citrus" role="img" aria-label="Vela Citrus Capri en frasco de vidrio claro">
-            <span class="product-card__tag product-card__tag--muted">Cítrica</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Citrus Capri</h4>
-            <p class="product-card__scent">pomelo · limón · mandarina verde</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Citrus%20Capri%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-
-        <!-- Aroma INFERIDO por el nombre — CONFIRMAR con Narda antes de publicar -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--cherry" role="img" aria-label="Vela Cherry en frasco ámbar">
-            <span class="product-card__tag product-card__tag--muted">Dulce</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Cherry</h4>
-            <p class="product-card__scent">cereza · almendra</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Cherry%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-
-        <!-- Aroma INFERIDO por el nombre — CONFIRMAR con Narda antes de publicar -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--spice" role="img" aria-label="Vela Spicy Orange en frasco ámbar">
-            <span class="product-card__tag product-card__tag--muted">Especiada</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Spicy Orange</h4>
-            <p class="product-card__scent">naranja · canela · clavo</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Spicy%20Orange%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-
-        <!-- Aroma INFERIDO por el nombre — CONFIRMAR con Narda antes de publicar -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--coast" role="img" aria-label="Vela Costa Azul en frasco de vidrio claro">
-            <span class="product-card__tag product-card__tag--muted">Fresca</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Costa Azul</h4>
-            <p class="product-card__scent">brisa marina · cítricos · algas</p>
-            <p class="product-card__price">$35.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20la%20vela%20Costa%20Azul%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">Pedir esta</a>
-          </div>
-        </li>
-      </ul>
-
-      <h3 class="catalog__group-title">Fragancias — Difusores y aromatizantes — $45.000</h3>
-      <ul class="catalog__grid">
-
-        <!-- Aroma INFERIDO — CONFIRMAR con Narda -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--fresh" role="img" aria-label="Difusor Aire Limpio con varillas">
-            <span class="product-card__tag product-card__tag--muted">Difusor</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Aire Limpio</h4>
-            <p class="product-card__scent">pepino · té blanco</p>
-            <p class="product-card__price">$45.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20el%20difusor%20Aire%20Limpio%20%F0%9F%8C%BF" target="_blank" rel="noopener">Pedir este</a>
-          </div>
-        </li>
-
-        <!-- Aroma INFERIDO — CONFIRMAR con Narda -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--exotic" role="img" aria-label="Difusor Exotic Bliss en botella de vidrio">
-            <span class="product-card__tag product-card__tag--muted">Difusor</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Exotic Bliss</h4>
-            <p class="product-card__scent">frutas exóticas · coco</p>
-            <p class="product-card__price">$45.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20el%20difusor%20Exotic%20Bliss%20%F0%9F%8C%BF" target="_blank" rel="noopener">Pedir este</a>
-          </div>
-        </li>
-
-        <!-- Aroma INFERIDO — CONFIRMAR con Narda -->
-        <li class="product-card">
-          <div class="product-card__media product-card__media--tropical" role="img" aria-label="Aromatizante en spray Aura Tropical">
-            <span class="product-card__tag product-card__tag--muted">Aromatizante</span>
-          </div>
-          <div class="product-card__body">
-            <h4 class="product-card__name">Aura Tropical</h4>
-            <p class="product-card__scent">frutos tropicales · flores blancas</p>
-            <p class="product-card__price">$45.000</p>
-            <a class="btn btn--card" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20el%20aromatizante%20Aura%20Tropical%20%F0%9F%8C%BF" target="_blank" rel="noopener">Pedir este</a>
-          </div>
-        </li>
-      </ul>
+      <div class="editorial__texto">
+        <p class="editorial__eyebrow">Quiénes somos</p>
+        <h2 class="editorial__titulo" id="nosotras-titulo">Dos hermanas, una cocina y muchas tandas chicas</h2>
+        <p class="editorial__parrafo">
+          TORIA empezó como algo entre nosotras dos: probar ceras, mezclar aromas y
+          llenar la casa de frascos hasta dar con los que valían la pena.
+        </p>
+        <p class="editorial__parrafo">
+          Seguimos haciendo todo a mano y en tandas chicas. Derretimos, perfumamos,
+          servimos y etiquetamos de a poco, porque es la única forma de mirar cada
+          vela antes de que salga. No es producción en serie: si una no queda como
+          queremos, no se vende.
+        </p>
+        <p class="editorial__firma">— Las hermanas de TORIA</p>
+      </div>
     </section>
 
-    <!-- ============ PRUEBA SOCIAL ============ -->
-    <!-- Sección quitada a propósito: las reseñas y las métricas del borrador eran
-         inventadas y no se pueden publicar como reales. Los estilos (.social,
-         .testimonial) siguen en el CSS: cuando tengas reseñas reales de clientas,
-         se vuelve a armar esta sección sin tocar nada más. -->
+    <!-- ═══════════════════════════════════════════════════════
+         CATÁLOGO — pestañas + filas alternadas
+         Las filas las genera js/catalogo.js desde data/products.json
+         ═══════════════════════════════════════════════════════ -->
+    <section class="catalogo" id="catalogo" aria-labelledby="catalogo-titulo">
+      <div class="catalogo__head">
+        <h2 class="catalogo__titulo" id="catalogo-titulo">Nuestra colección</h2>
+        <p class="catalogo__subtitulo">Cada aroma, un estado de ánimo distinto. Elegí el tuyo.</p>
+      </div>
 
-    <!-- ============ FAQ ============ -->
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <h2 class="faq__title" id="faq-title">Antes de que preguntes</h2>
-      <div class="faq__list">
+      <div class="tabs" role="tablist" aria-label="Líneas de producto">
+        <button class="tabs__btn tabs__btn--activa" type="button"
+                role="tab" id="tab-velas" aria-controls="velas" aria-selected="true"
+                data-tab="velas">Velas</button>
+        <button class="tabs__btn" type="button"
+                role="tab" id="tab-aromatizantes" aria-controls="aromatizantes" aria-selected="false" tabindex="-1"
+                data-tab="aromatizantes">Aromatizantes y difusores</button>
+      </div>
+
+      <div class="catalogo__panel" id="velas" role="tabpanel" aria-labelledby="tab-velas" tabindex="0"
+           data-panel="velas">
+        <!-- filas generadas por JS -->
+      </div>
+
+      <div class="catalogo__panel" id="aromatizantes" role="tabpanel" aria-labelledby="tab-aromatizantes" tabindex="0"
+           data-panel="aromatizantes" hidden>
+        <!-- filas generadas por JS -->
+      </div>
+
+      <p class="catalogo__sin-resultados" data-sin-resultados hidden>
+        No encontramos nada con ese nombre. Probá con otro aroma.
+      </p>
+
+      <noscript>
+        <p class="catalogo__noscript">
+          El catálogo y el carrito necesitan JavaScript activado.
+          Si preferís, escribinos directo por
+          <a href="https://wa.me/5493516695868">WhatsApp</a>.
+        </p>
+      </noscript>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FAQ
+         ═══════════════════════════════════════════════════════ -->
+    <section class="faq" id="faq" aria-labelledby="faq-titulo">
+      <h2 class="faq__titulo" id="faq-titulo">Antes de que preguntes</h2>
+      <div class="faq__lista">
 
         <details class="faq__item">
-          <summary class="faq__question">¿Hacen envíos? ¿A dónde?</summary>
-          <div class="faq__answer">
-            <p>Sí. Enviamos a todo el país por correo y, dentro de CABA y GBA, coordinamos entrega por mensajería. El costo depende de la zona; te lo pasamos al confirmar el pedido por WhatsApp.</p>
+          <summary class="faq__pregunta">¿Hacen envíos? ¿A dónde?</summary>
+          <div class="faq__respuesta">
+            <p>Sí. Enviamos a todo el país por correo y, dentro de Córdoba capital, coordinamos entrega por mensajería. El costo depende de la zona; te lo pasamos al confirmar el pedido.</p>
           </div>
         </details>
 
         <details class="faq__item">
-          <summary class="faq__question">¿Cuánto tardan en preparar mi pedido?</summary>
-          <div class="faq__answer">
-            <p>Como trabajamos en tandas chicas y a mano, la preparación toma entre 2 y 5 días hábiles. Si necesitás una fecha puntual (un cumpleaños, un regalo), avisanos y lo organizamos.</p>
+          <summary class="faq__pregunta">¿Cuánto tardan en preparar mi pedido?</summary>
+          <div class="faq__respuesta">
+            <p>Como trabajamos en tandas chicas y a mano, la preparación toma entre 2 y 5 días hábiles. Si necesitás una fecha puntual, avisanos y lo organizamos.</p>
           </div>
         </details>
 
         <details class="faq__item">
-          <summary class="faq__question">¿Cómo cuido la vela para que dure más?</summary>
-          <div class="faq__answer">
+          <summary class="faq__pregunta">¿Cómo cuido la vela para que dure más?</summary>
+          <div class="faq__respuesta">
             <p>La primera vez, dejala encendida hasta que la cera se derrita hasta los bordes: así evitás que se ahueque. Recortá el pabilo a unos 5&nbsp;mm antes de cada uso y no la dejes prendida más de 4 horas seguidas.</p>
           </div>
         </details>
 
         <details class="faq__item">
-          <summary class="faq__question">¿Qué medios de pago aceptan?</summary>
-          <div class="faq__answer">
-            <p>Transferencia bancaria y billeteras virtuales (Mercado Pago). Coordinamos todo por WhatsApp de forma simple antes de despachar.</p>
+          <summary class="faq__pregunta">¿Qué medios de pago aceptan?</summary>
+          <div class="faq__respuesta">
+            <p>Mercado Pago (tarjeta de crédito, débito o dinero en cuenta) al finalizar la compra. También podés cerrar el pedido por WhatsApp y coordinar transferencia.</p>
           </div>
         </details>
 
         <details class="faq__item">
-          <summary class="faq__question">¿Puedo reutilizar el frasco?</summary>
-          <div class="faq__answer">
+          <summary class="faq__pregunta">¿Puedo reutilizar el frasco?</summary>
+          <div class="faq__respuesta">
             <p>¡Sí, es la idea! Cuando se termina la cera, lavá el frasco con agua tibia y queda listo para usar como vaso, portalápices o lo que se te ocurra.</p>
           </div>
         </details>
@@ -890,42 +250,121 @@ a:focus-visible, summary:focus-visible, .btn:focus-visible {
       </div>
     </section>
 
-    <!-- ============ CTA FINAL ============ -->
-    <section class="final-cta" aria-labelledby="final-cta-title">
-      <div class="final-cta__inner">
-        <h2 class="final-cta__title" id="final-cta-title">Cada tanda es limitada</h2>
-        <p class="final-cta__text">
+    <!-- ═══════════════════════════════════════════════════════
+         CTA FINAL
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cta-final" aria-labelledby="cta-final-titulo">
+      <div class="cta-final__inner">
+        <h2 class="cta-final__titulo" id="cta-final-titulo">Cada tanda es limitada</h2>
+        <p class="cta-final__texto">
           Al ser producción artesanal, hacemos pocas unidades de cada aroma por vez.
-          Si hay una que te gusta, mejor no esperar: escribinos y la reservamos.
+          Si hay una que te gusta, mejor no esperar.
         </p>
-        <div class="final-cta__actions">
-          <a class="btn btn--primary btn--lg" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20hacer%20un%20pedido%20%F0%9F%95%AF%EF%B8%8F" target="_blank" rel="noopener">
-            Escribinos por WhatsApp
-          </a>
-          <a class="btn btn--ig btn--lg" href="https://instagram.com/_toria.studio" target="_blank" rel="noopener">
-            Seguinos en Instagram
-          </a>
+        <div class="cta-final__acciones">
+          <a class="btn btn--primario btn--lg" href="#catalogo">Ver la colección</a>
+          <a class="btn btn--borde-claro btn--lg" href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quiero%20hacer%20un%20pedido%20%F0%9F%95%AF%EF%B8%8F"
+             target="_blank" rel="noopener">Escribinos por WhatsApp</a>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="site-footer">
-    <div class="site-footer__inner">
-      <div class="site-footer__brand">
-        <span class="site-footer__name">TORIA STUDIO</span>
-        <p class="site-footer__tagline">Velas · Difusores · Aromatizantes · Hechas a mano</p>
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__marca">
+        <span class="footer__nombre">TORIA STUDIO</span>
+        <p class="footer__tagline">Velas · Difusores · Aromatizantes · Hechas a mano</p>
       </div>
-      <nav class="site-footer__links" aria-label="Contacto y redes">
-        <a href="https://wa.me/5493516695868" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://instagram.com/_toria.studio" target="_blank" rel="noopener">Instagram @_toria.studio</a>
-        <span>Envíos a todo el país</span>
+
+      <nav class="footer__col" aria-label="Contacto">
+        <h3 class="footer__col-titulo">Escribinos</h3>
+        <a class="footer__link" href="https://wa.me/5493516695868" target="_blank" rel="noopener">WhatsApp +54 9 351 669 5868</a>
+        <a class="footer__link" href="https://instagram.com/_toria.studio" target="_blank" rel="noopener">Instagram @_toria.studio</a>
       </nav>
+
+      <div class="footer__col">
+        <h3 class="footer__col-titulo">Envíos</h3>
+        <p class="footer__texto">A todo el país por correo.</p>
+        <p class="footer__texto">Mensajería en Córdoba capital.</p>
+        <p class="footer__texto">Preparación: 2 a 5 días hábiles.</p>
+      </div>
     </div>
-    <p class="site-footer__copy">© 2026 TORIA Studio. Hecho a mano en Argentina.</p>
+    <p class="footer__copy">© 2026 TORIA Studio. Hecho a mano en Argentina.</p>
   </footer>
 
+  <!-- ═══════════════════════════════════════════════════════
+       CARRITO — drawer lateral
+       El contenido lo renderiza js/carrito.js
+       ═══════════════════════════════════════════════════════ -->
+  <div class="overlay" data-overlay hidden></div>
+
+  <aside class="carrito" id="carrito" role="dialog" aria-modal="true" aria-labelledby="carrito-titulo" hidden>
+
+    <header class="carrito__head">
+      <h2 class="carrito__titulo" id="carrito-titulo">Tu pedido</h2>
+      <button class="carrito__cerrar" type="button" aria-label="Cerrar carrito" data-accion="cerrar-carrito">✕</button>
+    </header>
+
+    <div class="carrito__cuerpo">
+      <ul class="carrito__lista" data-carrito-lista></ul>
+
+      <p class="carrito__vacio" data-carrito-vacio>
+        Todavía no agregaste nada.
+        <button class="carrito__vacio-link" type="button" data-accion="cerrar-carrito">Volver a la colección</button>
+      </p>
+    </div>
+
+    <footer class="carrito__pie" data-carrito-pie hidden>
+
+      <!-- Cupón -->
+      <form class="cupon" data-cupon-form>
+        <label class="cupon__label" for="cupon-input">¿Tenés un cupón?</label>
+        <div class="cupon__fila">
+          <input class="cupon__input" id="cupon-input" type="text" placeholder="Código"
+                 autocomplete="off" spellcheck="false" data-cupon-input>
+          <button class="btn btn--borde btn--sm" type="submit">Aplicar</button>
+        </div>
+        <p class="cupon__estado" data-cupon-estado role="status" aria-live="polite"></p>
+      </form>
+
+      <!-- Totales -->
+      <dl class="totales">
+        <div class="totales__fila">
+          <dt>Subtotal</dt>
+          <dd data-total-subtotal>$0</dd>
+        </div>
+        <div class="totales__fila totales__fila--descuento" data-fila-descuento hidden>
+          <dt data-total-descuento-label>Descuento</dt>
+          <dd data-total-descuento>-$0</dd>
+        </div>
+        <div class="totales__fila totales__fila--total">
+          <dt>Total</dt>
+          <dd data-total-final>$0</dd>
+        </div>
+      </dl>
+
+      <p class="carrito__aviso">El envío se calcula y se coordina después, al confirmar el pedido.</p>
+
+      <div class="carrito__acciones">
+        <button class="btn btn--primario btn--bloque" type="button" data-accion="checkout">
+          Finalizar compra
+        </button>
+        <a class="btn btn--borde btn--bloque" href="#" target="_blank" rel="noopener" data-accion="whatsapp">
+          Pedir por WhatsApp
+        </a>
+      </div>
+
+      <p class="carrito__error" data-checkout-error role="alert" hidden></p>
+    </footer>
+  </aside>
+
+  <!-- Avisos flotantes ("Agregaste X al carrito") -->
+  <div class="aviso" data-aviso role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

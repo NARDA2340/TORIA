@@ -1,0 +1,28 @@
+Carpeta de fotos de TORIA Studio
+================================
+
+Poné acá los archivos con EXACTAMENTE estos nombres. Mientras no existan,
+la web muestra un degradado de color en su lugar (no se rompe nada).
+
+GENERALES
+  hero.jpg          1200 x 1400 px   Foto vertical de vela sobre fondo crema. Es la del hero.
+  nosotras.jpg      1000 x 1200 px   Las dos en el taller, para la sección "Quiénes somos".
+  og.jpg            1200 x  630 px   Horizontal. Es la que se ve al compartir el link por WhatsApp.
+
+PRODUCTOS (una por producto, cuadradas o 4:3, mínimo 900 px de ancho)
+  domingo-a-la-tarde.jpg
+  atelier.jpg
+  citrus-capri.jpg
+  cherry.jpg
+  spicy-orange.jpg
+  costa-azul.jpg
+  aire-limpio.jpg
+  exotic-bliss.jpg
+  aura-tropical.jpg
+
+RECOMENDACIONES
+  - Formato JPG o WebP. WebP pesa bastante menos con la misma calidad.
+  - Que cada archivo pese menos de 250 KB: si pesan mucho, el sitio tarda
+    en cargar y Google lo penaliza. Podés comprimirlas en squoosh.app.
+  - Si le cambiás el nombre a un archivo, hay que actualizar el campo
+    "imagen" de ese producto en public/data/products.json.

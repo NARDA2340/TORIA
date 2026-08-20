@@ -1,11 +1,25 @@
 # Configuración de despliegue para Netlify
-# Sitio estático: no hay paso de build, se publica el contenido de public/
+# Sitio estático (se publica public/) + una función serverless para Mercado Pago.
 
 [build]
   publish = "public"
+  # No hay paso de build: el HTML, CSS y JS se sirven tal cual.
+  # Netlify igual instala las dependencias de package.json para la función.
+
+[functions]
+  directory = "netlify/functions"
+  # esbuild sigue los require() y mete products.json dentro del paquete
+  # de la función, así el backend usa el mismo catálogo que la web.
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# El catálogo cambia seguido (precios): que no quede cacheado.
+[[headers]]
+  for = "/data/products.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

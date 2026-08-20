@@ -1,0 +1,130 @@
+{
+  "_comentario": "FUENTE UNICA DE VERDAD del catalogo. Lo lee el navegador (public/js/catalogo.js) y tambien la funcion serverless de Mercado Pago (netlify/functions/create-preference.js). Editar precios SOLO aca.",
+
+  "moneda": "ARS",
+
+  "cupones": {
+    "TORIA10": { "descuento": 10, "descripcion": "10% de descuento" },
+    "BIENVENIDA15": { "descuento": 15, "descripcion": "15% en tu primera compra" }
+  },
+
+  "productos": [
+    {
+      "id": "domingo-a-la-tarde",
+      "nombre": "Domingo a la tarde",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "manzana · especias · vainilla",
+      "descripcion": "El aroma de quedarse en casa. Manzana horneada y especias sobre un fondo de vainilla, tibio y sin empalagar.",
+      "precio": 35000,
+      "imagen": "media/domingo-a-la-tarde.jpg",
+      "gradiente": "warm",
+      "etiqueta": "Más vendida",
+      "aromaConfirmado": true
+    },
+    {
+      "id": "atelier",
+      "nombre": "Atelier",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "madera · ámbar · cuero",
+      "descripcion": "Seca y amaderada, con un dejo de cuero y ámbar. La que mejor funciona en escritorios y espacios de trabajo.",
+      "precio": 35000,
+      "imagen": "media/atelier.jpg",
+      "gradiente": "wood",
+      "etiqueta": "Amaderada",
+      "aromaConfirmado": true
+    },
+    {
+      "id": "citrus-capri",
+      "nombre": "Citrus Capri",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "pomelo · limón · mandarina verde",
+      "descripcion": "Cítrica y despierta. Pomelo y limón con un cierre de mandarina verde: ideal para cocinas y mañanas.",
+      "precio": 35000,
+      "imagen": "media/citrus-capri.jpg",
+      "gradiente": "citrus",
+      "etiqueta": "Cítrica",
+      "aromaConfirmado": true
+    },
+    {
+      "id": "cherry",
+      "nombre": "Cherry",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "cereza · almendra",
+      "descripcion": "Dulce y golosa, con la almendra que le baja el azúcar a la cereza.",
+      "precio": 35000,
+      "imagen": "media/cherry.jpg",
+      "gradiente": "cherry",
+      "etiqueta": "Dulce",
+      "aromaConfirmado": false
+    },
+    {
+      "id": "spicy-orange",
+      "nombre": "Spicy Orange",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "naranja · canela · clavo",
+      "descripcion": "Naranja con canela y clavo. Cálida, un poco navideña, muy de invierno.",
+      "precio": 35000,
+      "imagen": "media/spicy-orange.jpg",
+      "gradiente": "spice",
+      "etiqueta": "Especiada",
+      "aromaConfirmado": false
+    },
+    {
+      "id": "costa-azul",
+      "nombre": "Costa Azul",
+      "categoria": "velas",
+      "tipo": "Vela",
+      "aroma": "brisa marina · cítricos · algas",
+      "descripcion": "Fresca y salina, como una ventana abierta frente al mar.",
+      "precio": 35000,
+      "imagen": "media/costa-azul.jpg",
+      "gradiente": "coast",
+      "etiqueta": "Fresca",
+      "aromaConfirmado": false
+    },
+    {
+      "id": "aire-limpio",
+      "nombre": "Aire Limpio",
+      "categoria": "aromatizantes",
+      "tipo": "Difusor",
+      "aroma": "pepino · té blanco",
+      "descripcion": "Difusor de varillas. Limpio y neutro, pensado para baños y ambientes chicos.",
+      "precio": 45000,
+      "imagen": "media/aire-limpio.jpg",
+      "gradiente": "fresh",
+      "etiqueta": "Difusor",
+      "aromaConfirmado": false
+    },
+    {
+      "id": "exotic-bliss",
+      "nombre": "Exotic Bliss",
+      "categoria": "aromatizantes",
+      "tipo": "Difusor",
+      "aroma": "frutas exóticas · coco",
+      "descripcion": "Difusor de varillas. Frutal y cremoso, con el coco de fondo.",
+      "precio": 45000,
+      "imagen": "media/exotic-bliss.jpg",
+      "gradiente": "exotic",
+      "etiqueta": "Difusor",
+      "aromaConfirmado": false
+    },
+    {
+      "id": "aura-tropical",
+      "nombre": "Aura Tropical",
+      "categoria": "aromatizantes",
+      "tipo": "Aromatizante",
+      "aroma": "frutos tropicales · flores blancas",
+      "descripcion": "Aromatizante en spray. Un golpe de frutos tropicales y flores blancas para refrescar al instante.",
+      "precio": 45000,
+      "imagen": "media/aura-tropical.jpg",
+      "gradiente": "tropical",
+      "etiqueta": "Aromatizante",
+      "aromaConfirmado": false
+    }
+  ]
+}
