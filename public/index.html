@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TORIA</title>
+  <meta name="description" content="TORIA">
+  <style>
+    :root {
+      --bg: #fbfaf8;
+      --fg: #1a1a19;
+      --muted: #6b6a66;
+      --line: #e3e0da;
+      --accent: #c2632b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14140f;
+        --fg: #f2f0ea;
+        --muted: #9c9a92;
+        --line: #2c2c26;
+        --accent: #e08a4f;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+    main { max-width: 34rem; width: 100%; }
+    h1 {
+      font-size: clamp(2.75rem, 12vw, 5rem);
+      letter-spacing: 0.16em;
+      font-weight: 600;
+      margin: 0 0 1.25rem;
+      line-height: 1;
+    }
+    .rule {
+      width: 3.5rem;
+      height: 2px;
+      background: var(--accent);
+      border: 0;
+      margin: 0 0 1.5rem;
+    }
+    p {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 1.0625rem;
+      line-height: 1.6;
+    }
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>TORIA</h1>
+    <hr class="rule">
+    <p>Sitio en construcción.</p>
+    <p>Este es el punto de partida del proyecto. El contenido real se define en el próximo paso.</p>
+    <footer>
+      Desplegado automáticamente desde
+      <a href="https://github.com/NARDA2340/TORIA">github.com/NARDA2340/TORIA</a>
+    </footer>
+  </main>
+</body>
+</html>
