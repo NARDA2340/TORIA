@@ -9,8 +9,12 @@
   <meta property="og:title" content="TORIA Studio — Velas artesanales de cera vegetal">
   <meta property="og:description" content="Hechas a mano en tandas chicas. Cera 100% vegetal, aromas propios y packaging reutilizable.">
   <meta property="og:type" content="website">
-  <!-- PENDIENTE: og:image. Subir una foto a media/og.jpg (1200x630px) y descomentar:
-  <meta property="og:image" content="https://toriastudio.netlify.app/media/og.jpg"> -->
+  <meta property="og:image" content="https://toriastudio.netlify.app/media/og.jpg">
+  <meta property="og:url" content="https://toriastudio.netlify.app/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="media/logo.jpg">
+  <link rel="apple-touch-icon" href="media/logo.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +47,7 @@
           <ul class="nav__lista">
             <li><a class="nav__link" href="#velas" data-tab-link="velas">Velas</a></li>
             <li><a class="nav__link" href="#aromatizantes" data-tab-link="aromatizantes">Aromatizantes</a></li>
-            <li><a class="nav__link" href="#aromatizantes" data-tab-link="aromatizantes">Difusores</a></li>
+            <li><a class="nav__link" href="#difusores" data-tab-link="difusores">Difusores</a></li>
             <li><a class="nav__link" href="#nosotras">Nosotras</a></li>
           </ul>
         </nav>
@@ -96,7 +100,7 @@
       <ul class="menu-mobile__lista">
         <li><a class="menu-mobile__link" href="#velas" data-tab-link="velas">Velas</a></li>
         <li><a class="menu-mobile__link" href="#aromatizantes" data-tab-link="aromatizantes">Aromatizantes</a></li>
-        <li><a class="menu-mobile__link" href="#aromatizantes" data-tab-link="aromatizantes">Difusores</a></li>
+        <li><a class="menu-mobile__link" href="#difusores" data-tab-link="difusores">Difusores</a></li>
         <li><a class="menu-mobile__link" href="#nosotras">Nosotras</a></li>
       </ul>
     </nav>
@@ -179,18 +183,22 @@
                 data-tab="velas">Velas</button>
         <button class="tabs__btn" type="button"
                 role="tab" id="tab-aromatizantes" aria-controls="aromatizantes" aria-selected="false" tabindex="-1"
-                data-tab="aromatizantes">Aromatizantes y difusores</button>
+                data-tab="aromatizantes">Aromatizantes</button>
+        <button class="tabs__btn" type="button"
+                role="tab" id="tab-difusores" aria-controls="difusores" aria-selected="false" tabindex="-1"
+                data-tab="difusores">Difusores</button>
       </div>
 
+      <!-- Los tres paneles los llena js/catalogo.js desde data/products.json.
+           Las líneas sin productos cargados muestran un estado "en preparación". -->
       <div class="catalogo__panel" id="velas" role="tabpanel" aria-labelledby="tab-velas" tabindex="0"
-           data-panel="velas">
-        <!-- filas generadas por JS -->
-      </div>
+           data-panel="velas"></div>
 
       <div class="catalogo__panel" id="aromatizantes" role="tabpanel" aria-labelledby="tab-aromatizantes" tabindex="0"
-           data-panel="aromatizantes" hidden>
-        <!-- filas generadas por JS -->
-      </div>
+           data-panel="aromatizantes" hidden></div>
+
+      <div class="catalogo__panel" id="difusores" role="tabpanel" aria-labelledby="tab-difusores" tabindex="0"
+           data-panel="difusores" hidden></div>
 
       <p class="catalogo__sin-resultados" data-sin-resultados hidden>
         No encontramos nada con ese nombre. Probá con otro aroma.
@@ -230,6 +238,10 @@
           <summary class="faq__pregunta">¿Cómo cuido la vela para que dure más?</summary>
           <div class="faq__respuesta">
             <p>La primera vez, dejala encendida hasta que la cera se derrita hasta los bordes: así evitás que se ahueque. Recortá el pabilo a unos 5&nbsp;mm antes de cada uso y no la dejes prendida más de 4 horas seguidas.</p>
+            <p><strong>Y nunca la soples.</strong> Tapala con la tapa o usá un apagavelas: soplar salpica la cera y deja el humo dando vueltas por el ambiente.</p>
+            <img class="faq__img" src="media/tip-vela.jpg"
+                 alt="Vela TORIA Cherry recién apagada, con la indicación de nunca soplar la vela"
+                 loading="lazy" decoding="async" data-img-opcional>
           </div>
         </details>
 

@@ -1,9 +1,11 @@
 /**
  * catalogo.js — render del catálogo, pestañas y buscador
  *
- * Dibuja las filas de producto en layout alternado (una imagen-izquierda,
- * la siguiente imagen-derecha) dentro de cada pestaña. El "salteado" lo hace
- * el CSS con :nth-child(even); acá solo generamos el HTML en orden.
+ * Hay una pestaña por línea de producto (velas, aromatizantes, difusores).
+ * Dentro de cada pestaña, los productos se agrupan por tamaño, y cada grupo
+ * se dibuja en layout alternado: una fila imagen-izquierda, la siguiente
+ * imagen-derecha. El "salteado" lo hace el CSS con :nth-child(even), por eso
+ * cada grupo va en su propio contenedor: así la alternancia arranca de nuevo.
  */
 
 import { formatearPrecio, normalizar } from './datos.js';
@@ -13,33 +15,30 @@ let tabActiva = 'velas';
 
 /**
  * Crea la fila de un producto.
- * @param {Object} p Producto del catálogo
+ * innerHTML es seguro acá: todo sale de nuestro data/products.json,
+ * nunca de algo que escriba una visitante.
+ * @param {Object} p
  * @returns {HTMLElement}
  */
 function crearFila(p) {
   const art = document.createElement('article');
   art.className = 'producto';
   art.dataset.productoId = p.id;
-
-  // Texto buscable: nombre + aroma + tipo, sin tildes.
-  art.dataset.buscable = normalizar(`${p.nombre} ${p.aroma} ${p.tipo} ${p.descripcion}`);
-
-  const etiquetaDestacada = p.etiqueta === 'Más vendida' ? ' producto__etiqueta--destacada' : '';
-
-  // innerHTML es seguro acá: todo el contenido sale de nuestro propio
-  // data/products.json, nunca de algo que escriba una visitante.
+  art.dataset.buscable = normalizar(
+    `${p.nombre} ${p.aroma} ${p.tipo} ${p.familia} ${p.peso} ${p.descripcion}`
+  );
 
   art.innerHTML = `
     <div class="producto__media producto__media--${p.gradiente}">
       <img class="producto__img"
            src="${p.imagen}"
-           alt="${p.tipo} artesanal TORIA ${p.nombre}"
+           alt="${p.tipo} artesanal TORIA ${p.nombre}: ${p.aroma}"
            loading="lazy" decoding="async" data-img-opcional>
-      ${p.etiqueta ? `<span class="producto__etiqueta${etiquetaDestacada}">${p.etiqueta}</span>` : ''}
+      <span class="producto__etiqueta">${p.familia}</span>
     </div>
 
     <div class="producto__texto">
-      <p class="producto__tipo">${p.tipo}</p>
+      <p class="producto__tipo">${p.tipo} · ${p.peso}</p>
       <h3 class="producto__nombre">${p.nombre}</h3>
       <p class="producto__aroma">${p.aroma}</p>
       <p class="producto__descripcion">${p.descripcion}</p>
@@ -55,27 +54,78 @@ function crearFila(p) {
 }
 
 /**
- * Dibuja todos los productos en su pestaña correspondiente.
- * @param {Object} catalogo
+ * Dibuja una línea de producto completa dentro de su panel.
+ * @param {HTMLElement} panel
+ * @param {Array<Object>} productos Los de esa línea
+ * @param {Object} linea Datos de la línea (nombre, título)
  */
-export function renderizar(catalogo) {
-  const paneles = {
-    velas: document.querySelector('[data-panel="velas"]'),
-    aromatizantes: document.querySelector('[data-panel="aromatizantes"]'),
-  };
+function renderizarLinea(panel, productos, linea) {
+  panel.innerHTML = '';
 
-  Object.values(paneles).forEach((panel) => { if (panel) panel.innerHTML = ''; });
+  // Línea sin productos todavía: no dejamos la pestaña en blanco.
+  if (productos.length === 0) {
+    panel.innerHTML = `
+      <div class="catalogo__proximamente">
+        <h3 class="catalogo__proximamente-titulo">${linea.titulo}</h3>
+        <p>Todavía no están cargados acá, pero los hacemos.
+        Escribinos y te contamos qué hay disponible.</p>
+        <a class="btn btn--borde btn--cuadrado"
+           href="https://wa.me/5493516695868?text=%C2%A1Hola%20TORIA!%20Quer%C3%ADa%20consultar%20por%20${encodeURIComponent(linea.nombre.toLowerCase())}"
+           target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      </div>
+    `;
+    return;
+  }
 
-  for (const producto of catalogo.productos) {
-    const panel = paneles[producto.categoria];
-    if (panel) panel.appendChild(crearFila(producto));
+  // Agrupamos por tamaño, respetando el orden del JSON.
+  const grupos = new Map();
+  for (const p of productos) {
+    if (!grupos.has(p.peso)) grupos.set(p.peso, []);
+    grupos.get(p.peso).push(p);
+  }
+
+  // Si hay un solo tamaño, el encabezado de grupo no aporta nada.
+  const mostrarEncabezados = grupos.size > 1;
+
+  for (const [peso, delGrupo] of grupos) {
+    if (mostrarEncabezados) {
+      const h4 = document.createElement('h4');
+      h4.className = 'catalogo__grupo-titulo';
+      h4.dataset.grupoTitulo = peso;
+
+      // Si todo el grupo comparte precio, lo mostramos al lado del tamaño.
+      const precios = new Set(delGrupo.map((p) => p.precio));
+      h4.textContent = precios.size === 1
+        ? `${peso} — ${formatearPrecio(delGrupo[0].precio)}`
+        : peso;
+
+      panel.appendChild(h4);
+    }
+
+    const cont = document.createElement('div');
+    cont.className = 'catalogo__grupo';
+    delGrupo.forEach((p) => cont.appendChild(crearFila(p)));
+    panel.appendChild(cont);
   }
 }
 
 /**
- * Cambia de pestaña. Mantiene sincronizados los atributos ARIA para que
- * un lector de pantalla anuncie bien cuál está activa.
- * @param {string} nombre 'velas' | 'aromatizantes'
+ * Dibuja todas las líneas en sus paneles.
+ * @param {Object} catalogo
+ */
+export function renderizar(catalogo) {
+  for (const linea of catalogo.lineas) {
+    const panel = document.querySelector(`[data-panel="${linea.id}"]`);
+    if (!panel) continue;
+
+    const productos = catalogo.productos.filter((p) => p.linea === linea.id);
+    renderizarLinea(panel, productos, linea);
+  }
+}
+
+/**
+ * Cambia de pestaña, manteniendo sincronizados los atributos ARIA.
+ * @param {string} nombre
  */
 export function activarTab(nombre) {
   tabActiva = nombre;
@@ -92,14 +142,13 @@ export function activarTab(nombre) {
   });
 }
 
-/** Conecta los clics y el manejo de flechas del teclado en las pestañas. */
+/** Clics y flechas del teclado en las pestañas (patrón ARIA de tablist). */
 export function conectarTabs() {
   const botones = Array.from(document.querySelectorAll('.tabs__btn'));
 
   botones.forEach((btn) => {
     btn.addEventListener('click', () => activarTab(btn.dataset.tab));
 
-    // Flechas ← → para moverse entre pestañas (patrón ARIA de tablist).
     btn.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
       e.preventDefault();
@@ -116,32 +165,44 @@ export function conectarTabs() {
 }
 
 /**
- * Filtra los productos por texto. Mientras hay búsqueda activa se muestran
- * las dos pestañas juntas, porque lo que se busca puede estar en cualquiera.
+ * Filtra por texto. Mientras hay búsqueda, se muestran todas las líneas
+ * juntas, porque lo buscado puede estar en cualquiera.
  * @param {string} texto
  */
 export function filtrar(texto) {
   const consulta = normalizar(texto).trim();
-  const paneles = document.querySelectorAll('.catalogo__panel');
   const estado = document.querySelector('[data-buscador-estado]');
   const sinResultados = document.querySelector('[data-sin-resultados]');
 
   // Sin texto: volvemos al comportamiento normal de pestañas.
   if (!consulta) {
     activarTab(tabActiva);
-    document.querySelectorAll('.producto').forEach((f) => { f.hidden = false; });
+    document.querySelectorAll('.producto, .catalogo__grupo, .catalogo__grupo-titulo, .catalogo__proximamente')
+      .forEach((el) => { el.hidden = false; });
     if (estado) estado.textContent = '';
     if (sinResultados) sinResultados.hidden = true;
     return;
   }
 
-  paneles.forEach((panel) => { panel.hidden = false; });
+  document.querySelectorAll('.catalogo__panel').forEach((p) => { p.hidden = false; });
+  // El bloque "en preparación" no es un resultado de búsqueda.
+  document.querySelectorAll('.catalogo__proximamente').forEach((el) => { el.hidden = true; });
 
   let encontrados = 0;
   document.querySelectorAll('.producto').forEach((fila) => {
     const coincide = fila.dataset.buscable.includes(consulta);
     fila.hidden = !coincide;
     if (coincide) encontrados++;
+  });
+
+  // Escondemos los grupos que quedaron sin ningún producto visible,
+  // junto con su encabezado, para que no queden títulos huérfanos.
+  document.querySelectorAll('.catalogo__grupo').forEach((grupo) => {
+    const vacio = grupo.querySelectorAll('.producto:not([hidden])').length === 0;
+    grupo.hidden = vacio;
+
+    const titulo = grupo.previousElementSibling;
+    if (titulo?.classList.contains('catalogo__grupo-titulo')) titulo.hidden = vacio;
   });
 
   if (estado) {

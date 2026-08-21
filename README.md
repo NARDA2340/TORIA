@@ -12,7 +12,8 @@ HTML, CSS y JavaScript puro, sin frameworks. Se despliega en Netlify.
 - Header sticky con logo centrado, navegación por línea de producto, buscador y carrito con contador.
 - Hero dividido en dos: bloque terracota con los accesos a cada categoría, y foto.
 - Sección "Nosotras".
-- Catálogo con dos pestañas (Velas / Aromatizantes y difusores) en layout alternado.
+- Catálogo con tres pestañas, una por línea (Velas / Aromatizantes / Difusores),
+  en layout alternado. Dentro de cada línea los productos se agrupan por tamaño.
 - Carrito lateral con cantidades, cupones y totales, que se guarda en el navegador.
 - Dos formas de cerrar la compra: Mercado Pago o WhatsApp.
 
@@ -61,11 +62,20 @@ de que el precio que se muestra y el que se cobra queden distintos.
 
 Sin puntos, sin comas, sin signo peso: `35000`, no `$35.000`.
 
-**Para agregar un producto**, copiá un bloque entero y cambiale los datos.
-El `id` tiene que ser único y en minúsculas con guiones (`vela-nueva`).
-La `categoria` define en qué pestaña aparece: `velas` o `aromatizantes`.
-El `gradiente` es el color de respaldo mientras no haya foto: los disponibles
-son `warm`, `wood`, `citrus`, `cherry`, `spice`, `coast`, `fresh`, `exotic` y `tropical`.
+**Para agregar un producto**, copiá un bloque entero y cambiale los datos:
+
+| Campo | Qué es |
+|---|---|
+| `id` | Único, en minúsculas con guiones (`vela-nueva`). Define el nombre del archivo de foto. |
+| `linea` | En qué pestaña aparece: `velas`, `aromatizantes` o `difusores`. |
+| `peso` | Agrupa dentro de la pestaña. Los de igual peso quedan juntos. |
+| `familia` | La etiqueta que se ve sobre la foto (`Cítrica`, `Amaderada`…). |
+| `aroma` | Las notas, tal como están impresas en la etiqueta del frasco. |
+| `gradiente` | Color de respaldo si falta la foto: `warm`, `wood`, `citrus`, `cherry`, `spice`, `coast`, `fresh`, `exotic`, `tropical`, `grape`. |
+
+Las líneas `aromatizantes` y `difusores` existen pero todavía no tienen
+productos: su pestaña muestra un bloque "en preparación" con un link a WhatsApp.
+En cuanto cargues el primero, el bloque desaparece solo.
 
 **Para cambiar los cupones:**
 
@@ -87,11 +97,13 @@ El `descuento` es el porcentaje. Para desactivar un cupón, borrá su bloque.
 
 ## Las fotos
 
-Van en `public/media/` con nombres exactos. La lista completa con las medidas
-recomendadas está en `public/media/LEEME.txt`.
+Están todas en `public/media/`, redimensionadas a 900px de ancho y por debajo
+de 250 KB cada una. Los detalles y los nombres exactos están en
+`public/media/LEEME.txt`.
 
-Mientras un archivo no exista, la web muestra un degradado de color en su lugar
-y no se rompe nada. Podés ir subiéndolas de a una.
+Si agregás un producto nuevo, la foto va con el mismo nombre que su `id`
+(por ejemplo `media/vela-nueva.jpg`). Mientras el archivo no exista, la web
+muestra el degradado de respaldo y no se rompe nada.
 
 ---
 
@@ -301,14 +313,21 @@ Variables**, con el mismo nombre `MP_ACCESS_TOKEN`. También hay que redesplegar
 
 ## Pendientes antes de difundir el link
 
-- [ ] **Fotos.** Ver `public/media/LEEME.txt`. Es lo que más se nota.
-- [ ] **Notas de aroma sin confirmar.** Seis productos tienen las notas inferidas
-      por el nombre, no confirmadas: Cherry, Spicy Orange, Costa Azul, Aire Limpio,
-      Exotic Bliss y Aura Tropical. En `products.json` están marcados con
-      `"aromaConfirmado": false`.
-- [ ] **Precios.** Verificar que $35.000 y $45.000 estén vigentes.
+- [ ] **Access Token de Mercado Pago.** Es lo único que falta para poder cobrar
+      online. Ver la guía de más arriba.
+- [ ] **Foto de ustedes dos.** La sección "Nosotras" usa hoy `media/nosotras.jpg`,
+      que es una foto de producto, no de ustedes. El texto habla de dos hermanas,
+      así que una foto de las dos en el taller cerraría mucho mejor.
 - [ ] **Costo de envío.** Hoy el checkout cobra solo los productos; el envío se
       coordina aparte por WhatsApp. Si querés cobrarlo junto, se puede agregar.
-- [ ] **`og:image`.** Subir `media/og.jpg` y descomentar la línea en `index.html`.
+- [ ] **Aromatizantes y difusores.** Las dos pestañas están armadas y vacías.
+      Cuando tengas fotos y precios, se cargan en `products.json` y aparecen solas.
 - [ ] **Reseñas.** La sección está sacada porque los testimonios del borrador
       eran inventados. Los estilos siguen disponibles para rearmarla con reseñas reales.
+
+## Hecho
+
+- [x] Fotos de los diez productos, hero, "Nosotras" y la imagen para compartir.
+- [x] Notas de aroma transcriptas de las etiquetas de los frascos (ya no hay
+      ninguna inferida).
+- [x] Precios por tamaño: 180 g a $35.000 y 200 g a $45.000.

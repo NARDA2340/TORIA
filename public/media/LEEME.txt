@@ -1,28 +1,32 @@
-Carpeta de fotos de TORIA Studio
-================================
+Fotos de TORIA Studio
+=====================
 
-Poné acá los archivos con EXACTAMENTE estos nombres. Mientras no existan,
-la web muestra un degradado de color en su lugar (no se rompe nada).
+Todas las imágenes están optimizadas: 900px de ancho para los productos,
+1000px para las generales, y por debajo de 250 KB cada una.
+Los originales sin procesar están en la rama main del repositorio.
 
 GENERALES
-  hero.jpg          1200 x 1400 px   Foto vertical de vela sobre fondo crema. Es la del hero.
-  nosotras.jpg      1000 x 1200 px   Las dos en el taller, para la sección "Quiénes somos".
-  og.jpg            1200 x  630 px   Horizontal. Es la que se ve al compartir el link por WhatsApp.
+  hero.jpg        1000x1301   Vela Atelier sobre la consola. Es la del hero.
+  nosotras.jpg    1000x892    Vela con cítricos. Usada en "Quiénes somos".
+                              ⚠ PENDIENTE: reemplazar por una foto de las dos
+                                en el taller. El texto de esa sección habla de
+                                dos hermanas y hoy la foto es de producto.
+  tip-vela.jpg     800x999    "Nunca soples tu vela". Va en el FAQ de cuidado.
+  logo.jpg         600x597    Logo enmarcado. Se usa como favicon.
+  og.jpg          1200x630    La que aparece al compartir el link por WhatsApp.
 
-PRODUCTOS (una por producto, cuadradas o 4:3, mínimo 900 px de ancho)
-  domingo-a-la-tarde.jpg
-  atelier.jpg
-  citrus-capri.jpg
-  cherry.jpg
-  spicy-orange.jpg
-  costa-azul.jpg
-  aire-limpio.jpg
-  exotic-bliss.jpg
-  aura-tropical.jpg
+PRODUCTOS (900x~1120, verticales)
+  aire-limpio.jpg     ambar-citrus.jpg    atelier.jpg
+  cherry.jpg          citrus-capri.jpg    costa-azul.jpg
+  exotic-bliss.jpg    sea-salt.jpg        spicy-orange.jpg
+  uva-velvet.jpg
 
-RECOMENDACIONES
-  - Formato JPG o WebP. WebP pesa bastante menos con la misma calidad.
-  - Que cada archivo pese menos de 250 KB: si pesan mucho, el sitio tarda
-    en cargar y Google lo penaliza. Podés comprimirlas en squoosh.app.
-  - Si le cambiás el nombre a un archivo, hay que actualizar el campo
-    "imagen" de ese producto en public/data/products.json.
+CÓMO AGREGAR UNA FOTO NUEVA
+  El nombre del archivo tiene que coincidir con el "id" del producto en
+  public/data/products.json. Por ejemplo, un producto con id "vela-nueva"
+  busca su foto en media/vela-nueva.jpg.
+
+  Formato vertical, proporción cercana a 4:5 (por ejemplo 900x1120). Es la
+  proporción que usa el sitio: en celular entra entera sin recorte.
+
+  Si pesa más de 250 KB, comprimila en squoosh.app antes de subirla.

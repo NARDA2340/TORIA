@@ -40,6 +40,7 @@
   --grad-fresh:    linear-gradient(160deg, #c3cbb4, #7c8a67);
   --grad-exotic:   linear-gradient(160deg, #d3c0a2, #987f57);
   --grad-tropical: linear-gradient(160deg, #e2c088, #c07d3f);
+  --grad-grape:    linear-gradient(160deg, #9d8296, #5d4358);
 }
 
 /* ---------------------------------------------------------
@@ -161,6 +162,9 @@ summary:focus-visible,
   align-items: center;
   text-decoration: none;
   line-height: 1;
+  /* Marco fino, como en el logo impreso de las etiquetas */
+  border: 1px solid var(--ink);
+  padding: 8px 18px 9px;
 }
 .header__brand-nombre {
   font-family: var(--font-serif);
@@ -478,6 +482,41 @@ summary:focus-visible,
 
 .catalogo__panel:focus { outline: none; }
 
+/* Encabezado de cada grupo de tamaño dentro de una línea */
+.catalogo__grupo-titulo {
+  max-width: var(--maxw);
+  margin: 34px auto 4px;
+  padding: 0 20px;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ink);
+  border-left: 3px solid var(--terracotta);
+}
+
+/* Cada grupo es su propio contenedor para que la alternancia
+   imagen-izquierda / imagen-derecha vuelva a arrancar en cada uno. */
+.catalogo__grupo { display: block; }
+
+/* Estado de las líneas que todavía no tienen productos cargados */
+.catalogo__proximamente {
+  max-width: 34rem;
+  margin: 48px auto 56px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--ink-soft);
+  background: var(--cream-soft);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+}
+.catalogo__proximamente-titulo {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.catalogo__proximamente p { margin-bottom: 22px; }
+
 /* Fila de producto — apilada en mobile, alternada en desktop */
 .producto {
   display: grid;
@@ -492,7 +531,9 @@ summary:focus-visible,
 
 .producto__media {
   position: relative;
-  aspect-ratio: 4 / 3;
+  /* Las fotos del catálogo son verticales (900x1120 ≈ 4/5).
+     En mobile usamos esa misma proporción: entran enteras, sin recorte. */
+  aspect-ratio: 4 / 5;
   overflow: hidden;
 }
 .producto__img { width: 100%; height: 100%; object-fit: cover; }
@@ -507,6 +548,7 @@ summary:focus-visible,
 .producto__media--fresh    { background: var(--grad-fresh); }
 .producto__media--exotic   { background: var(--grad-exotic); }
 .producto__media--tropical { background: var(--grad-tropical); }
+.producto__media--grape    { background: var(--grad-grape); }
 
 .producto__etiqueta {
   position: absolute;
@@ -519,7 +561,6 @@ summary:focus-visible,
   padding: 5px 12px;
   border-radius: 999px;
 }
-.producto__etiqueta--destacada { background: var(--terracotta); color: #fff; }
 
 .producto__texto {
   padding: 32px 20px 40px;
@@ -585,6 +626,13 @@ summary:focus-visible,
 }
 .faq__item[open] .faq__pregunta::after { content: "–"; }
 .faq__respuesta { padding: 0 0 20px; color: var(--ink-soft); }
+.faq__respuesta p + p { margin-top: 12px; }
+.faq__img {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 18px;
+  border-radius: var(--radius);
+}
 
 /* ---------------------------------------------------------
    9. CTA FINAL
@@ -718,6 +766,7 @@ summary:focus-visible,
 .linea__media--fresh    { background: var(--grad-fresh); }
 .linea__media--exotic   { background: var(--grad-exotic); }
 .linea__media--tropical { background: var(--grad-tropical); }
+.linea__media--grape    { background: var(--grad-grape); }
 .linea__img { width: 100%; height: 100%; object-fit: cover; }
 
 .linea__nombre { font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.2; }
@@ -877,7 +926,7 @@ summary:focus-visible,
 
   /* Filas alternadas: imagen izquierda / derecha, salteado */
   .producto { grid-template-columns: 1fr 1fr; }
-  .producto__media { aspect-ratio: auto; min-height: 380px; }
+  .producto__media { aspect-ratio: 1 / 1; min-height: 0; }
   .producto__texto { padding: 48px 44px; }
 
   /* Impares: imagen a la izquierda (orden natural).
@@ -898,7 +947,7 @@ summary:focus-visible,
   .editorial__texto { padding: 88px 64px; }
   .editorial__titulo { font-size: 2.5rem; }
 
-  .producto__media { min-height: 460px; }
+  .producto__media { aspect-ratio: 1 / 1; }
   .producto__texto { padding: 64px; }
   .producto__nombre { font-size: 2.3rem; }
 }
