@@ -109,6 +109,18 @@
   <main id="contenido">
 
     <!-- ═══════════════════════════════════════════════════════
+         VUELTA DE MERCADO PAGO
+         Oculto salvo que la URL traiga ?pago=... Lo llena js/vuelta.js
+         ═══════════════════════════════════════════════════════ -->
+    <section class="vuelta" data-vuelta hidden aria-labelledby="vuelta-titulo" role="status">
+      <div class="vuelta__inner">
+        <h2 class="vuelta__titulo" id="vuelta-titulo" data-vuelta-titulo></h2>
+        <p class="vuelta__texto" data-vuelta-texto></p>
+        <div class="vuelta__acciones" data-vuelta-acciones></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
          HERO — dividido 50/50: bloque de color + foto
          ═══════════════════════════════════════════════════════ -->
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">

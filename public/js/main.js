@@ -11,6 +11,7 @@ import * as catalogo from './catalogo.js';
 import * as ui from './ui.js';
 import { renderizarCarrito } from './carrito-ui.js';
 import { iniciarPagoMercadoPago } from './checkout.js';
+import { revisarVueltaDePago } from './vuelta.js';
 
 /** Catálogo ya cargado, disponible para todos los handlers. */
 let datos = null;
@@ -41,6 +42,9 @@ async function iniciar() {
   renderizarCarrito(datos);
 
   conectarEventos();
+
+  // Si venimos de pagar en Mercado Pago, mostramos cómo salió.
+  revisarVueltaDePago(datos);
 }
 
 /** Si el JSON del catálogo no carga, al menos que quede el camino a WhatsApp. */

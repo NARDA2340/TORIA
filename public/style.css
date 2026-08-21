@@ -325,6 +325,39 @@ summary:focus-visible,
 .menu-mobile__lista li:last-child .menu-mobile__link { border-bottom: 0; }
 
 /* ---------------------------------------------------------
+   4b. VUELTA DE MERCADO PAGO
+   --------------------------------------------------------- */
+.vuelta {
+  background: var(--cream-soft);
+  border-bottom: 1px solid var(--sand);
+}
+.vuelta__inner {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 40px 20px 44px;
+  text-align: center;
+}
+.vuelta__titulo {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.vuelta__texto {
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+.vuelta__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+/* Una línea de color arriba según cómo haya salido el pago */
+.vuelta[data-estado="exito"]     { border-top: 4px solid var(--olive); }
+.vuelta[data-estado="pendiente"] { border-top: 4px solid #b8862f; }
+.vuelta[data-estado="error"]     { border-top: 4px solid var(--terracotta); }
+
+/* ---------------------------------------------------------
    5. HERO — bloque de color + foto
    --------------------------------------------------------- */
 .hero { display: grid; grid-template-columns: 1fr; }

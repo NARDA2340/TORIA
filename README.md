@@ -34,6 +34,7 @@ public/                       Todo lo que se publica
     carrito-ui.js             Dibujo del carrito lateral
     catalogo.js               Filas de producto, pestañas y buscador
     checkout.js               Mercado Pago y armado del mensaje de WhatsApp
+    vuelta.js                 Qué se muestra al volver de pagar
     ui.js                     Menú, buscador, drawer, foco y avisos
   media/
     LEEME.txt                 Qué foto va en cada nombre de archivo
@@ -242,6 +243,43 @@ Cuando estés conforme:
 
 A partir de ahí, cada venta te aparece en tu cuenta de Mercado Pago como
 cualquier otro cobro.
+
+## Cómo te llegan las ventas
+
+Es la parte que más conviene tener clara, porque **el sitio no te avisa nada
+por su cuenta**. El circuito real es este:
+
+1. La clienta toca "Finalizar compra" y va a Mercado Pago.
+2. Paga ahí, en el sitio de Mercado Pago (los datos de la tarjeta nunca pasan
+   por tu web).
+3. **La plata entra a tu cuenta de Mercado Pago.** Te llega la notificación
+   de siempre, la del cobro, por mail y por la app.
+4. A la clienta la devuelven a tu sitio, donde ve un cartel de confirmación
+   y un botón para mandarte los datos de envío por WhatsApp.
+
+**El punto 4 es el importante.** Checkout Pro no le pide la dirección a la
+clienta, así que sin ese paso vos verías el cobro en Mercado Pago pero no
+sabrías a dónde mandar el pedido. Por eso, apenas paga, el sitio le arma un
+mensaje de WhatsApp con el detalle de lo que compró, el número de pago y los
+campos para completar nombre, dirección y localidad.
+
+Entonces, cada venta te llega por dos lados a la vez:
+
+| Dónde | Qué ves |
+|---|---|
+| Tu cuenta de Mercado Pago | El cobro, el monto y el detalle de productos. **Es la fuente confiable.** |
+| WhatsApp | El mensaje de la clienta con sus datos de envío y el número de pago. |
+
+Con el número de pago cruzás los dos y sabés qué preparar y a dónde mandarlo.
+
+> Nunca despaches un pedido solo porque alguien te muestra la pantalla de
+> "pago aprobado": esa pantalla se puede falsificar escribiendo la dirección
+> a mano. Confirmá siempre que el cobro esté en tu cuenta de Mercado Pago.
+
+Si más adelante querés que los pedidos queden registrados solos, sin depender
+del WhatsApp, se puede agregar un webhook: Mercado Pago le avisa al sitio cada
+vez que se aprueba un pago y el pedido queda guardado. Es más trabajo y
+requiere una base de datos, pero es el paso siguiente natural.
 
 ## Si algo falla
 
